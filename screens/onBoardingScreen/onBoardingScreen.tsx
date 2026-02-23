@@ -8,14 +8,19 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
 import CustomButton from '../../components/CustomBotton/CustomButton';
+import HeadingText from '../../components/HeadingText';
+import { useAppDispatch } from '../../redux/store';
+import { setOnBoardingStatus } from '../../redux/feature/auth.feature';
 
 const { height } = Dimensions.get('window');
 
 const OnboardingScreen = () => {
   const navigation = useNavigation();
+  const dispatch  = useAppDispatch()
   const autoSwipeRef:any = useRef(null);
   const timerRef:any = useRef(null);
 
@@ -43,10 +48,13 @@ const OnboardingScreen = () => {
           source={require('../../assets/images/onboardingbgone.png')}
           style={styles.backgroundImage}
         >
-          {/* <View style={styles.imageOverlay}>
-            <Text style={styles.emoji}>📊</Text>
-            <Text style={styles.imageTitle}>Progress Tracking</Text>
-          </View> */}
+          <View style={styles.imageOverlay}>
+              <HeadingText
+              text='Real-Time Progress Tracking'
+              textStyles={{color:"white",fontSize:40,fontWeight:"600",textAlign:"center"}}
+              />
+            <Text style={{color:"white",fontSize:16,fontWeight:"400",textAlign:"center"}}>Monitor timelines, budgets, and milestones on the go</Text>
+          </View>
         </ImageBackground>
       ),
       title: 'Real-Time Progress Tracking',
@@ -59,10 +67,13 @@ const OnboardingScreen = () => {
           source={require('../../assets/images/onboardingbgone.png')}
           style={styles.backgroundImage}
         >
-          {/* <View style={styles.imageOverlay}>
-            <Text style={styles.emoji}>👷</Text>
-            <Text style={styles.imageTitle}>Team Collaboration</Text>
-          </View> */}
+          <View style={styles.imageOverlay}>
+            <HeadingText
+              text='Team Collaboration'
+              textStyles={{color:"white",fontSize:40,fontWeight:"600",textAlign:"center"}}
+              />
+            <Text style={{color:"white",fontSize:16,fontWeight:"400",textAlign:"center"}}>Connect with workers, managers, and subcontractors</Text>
+          </View>
         </ImageBackground>
       ),
       title: 'Team Collaboration',
@@ -102,10 +113,11 @@ const OnboardingScreen = () => {
     };
   }, []);
 
-  const handleDone = async () => {
+  const handleGetStarted = async () => {
     try {
-    //   await AsyncStorage.setItem('@viewedOnboarding', 'true');
-    //   navigation.replace('MainApp');
+      await AsyncStorage.setItem('@viewedOnboarding', 'true');
+      dispatch(setOnBoardingStatus(true));
+      // navigation.replace('MainApp');
     } catch (error) {
       console.error('Error saving onboarding status:', error);
     }
@@ -125,8 +137,8 @@ const OnboardingScreen = () => {
         
         ref={autoSwipeRef}
         pages={slides}
-        onDone={handleDone}
-        onSkip={handleDone}
+        onDone={handleGetStarted}
+        onSkip={handleGetStarted}
         bottomBarHighlight={false}
         bottomBarHeight={120}
         titleStyles={styles.title}
@@ -144,7 +156,7 @@ const OnboardingScreen = () => {
       <View style={{width:"100%",paddingHorizontal:20}}>
         <CustomButton
         title='Get Started'
-        onPress={()=>{}}
+        onPress={()=>{handleGetStarted()}}
         customStyles={{backgroundColor:"white",marginBottom:10}}
         textStyles={{color:"black"}}
         
@@ -169,10 +181,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageOverlay: {
+    width:"100%",
+    height:"100%",
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 30,
-    borderRadius: 20,
+    padding:10,
     alignItems: 'center',
+
   },
   emoji: {
     fontSize: 70,

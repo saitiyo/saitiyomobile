@@ -30,6 +30,7 @@ interface IntialState {
     photo?:PhotoFile| undefined
     uploadSide?:string
     userMainNavigationInitialRoute?:string
+    isFirstLaunch?:boolean
 
 }
 
@@ -53,7 +54,8 @@ const initialState:IntialState =  {
    artistAccountId:null,
    photo:undefined,
    uploadSide:"front",
-   userMainNavigationInitialRoute:undefined
+   userMainNavigationInitialRoute:undefined,
+   isFirstLaunch:true
 }
 
 
@@ -61,7 +63,10 @@ const authSlice = createSlice({
     name:"auth/slice",
     initialState:initialState,
     reducers:{
-    
+
+        setOnBoardingStatus:(state,action)=>{
+            state.isFirstLaunch = action.payload
+        },
         setMobileNumber:(state,action)=>{
             state.mobileNumber = action.payload
         },
@@ -249,6 +254,7 @@ export const {
     setArtistAccountId,
     setPhoto,
     setUploadSide,
-    setUserMainNavigationInitialRoute
+    setUserMainNavigationInitialRoute,
+    setOnBoardingStatus
 } = authSlice.actions
 export default authSlice.reducer

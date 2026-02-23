@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import UserMainNavigation from "./userMainNavigation"
-import { RootState } from "../redux/store"
+import { RootState, useAppDispatch } from "../redux/store"
 import { accounts } from "../constants/accounts"
 import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
@@ -11,6 +11,7 @@ import AuthStack from "./AuthStack"
 import RegisterArtistStack from "./RegisterArtistStack"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import OnboardingScreen from "../screens/onBoardingScreen/onBoardingScreen"
+import { setOnBoardingStatus } from "../redux/feature/auth.feature"
 
 
 
@@ -31,26 +32,29 @@ const NavHost=()=>{
     const APP_VERSION = 6.0
 
     const {data} = useQuery<any>(GET_VERSION);
-    const {activeAccount,showAuthStack,showRegisterArtistStack} = useSelector((state:RootState)=> state.authSlice)
+
+    const dispatch = useAppDispatch()
+
+    const {activeAccount,showAuthStack,showRegisterArtistStack,isFirstLaunch} = useSelector((state:RootState)=> state.authSlice)
     const [newVersion,setNewVersion] = useState<number>(0)
     const [uri,setUri] = useState<string>("")
 
-
-    const [isFirstLaunch, setIsFirstLaunch] = useState<boolean>(true);
 
     useEffect(() => {
       checkFirstLaunch();
     }, []);
 
+
+
   const checkFirstLaunch = async () => {
     try {
       const hasViewedOnboarding = await AsyncStorage.getItem('@viewedOnboarding');
 
-      setIsFirstLaunch(hasViewedOnboarding === null);
+      dispatch(setOnBoardingStatus(hasViewedOnboarding === 'true'));
 
     } catch (error) {
       console.error('Error checking onboarding status:', error);
-      setIsFirstLaunch(true); // Default to show onboarding on error
+      dispatch(setOnBoardingStatus(true)); // Default to show onboarding on error
     }
   };
 

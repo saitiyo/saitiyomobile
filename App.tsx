@@ -29,7 +29,6 @@ function App(): React.JSX.Element {
     <SafeAreaView style={{flex:1}}>
       <Main/>
     </SafeAreaView>
-    
     </NavigationContainer>
     </Provider>
   )

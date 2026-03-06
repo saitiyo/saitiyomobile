@@ -24,8 +24,9 @@ const VerifyOTPScreen = () => {
   
   const navigation:any = useNavigation()
 
-    const dispatch = useAppDispatch()
-    const {pin_id,mobileNumber,callingCode,isError,message,loading,isSuccess,isNewUser} = useSelector((state:RootState)=> state.authSlice)
+  const dispatch = useAppDispatch()
+
+  const {pin_id,mobileNumber,callingCode,isError,message,loading,isSuccess,isNewUser} = useSelector((state:RootState)=> state.authSlice)
     
 
    const [otp,setOtp] = useState<string>("")
@@ -36,6 +37,7 @@ const VerifyOTPScreen = () => {
 
      //get location info by IP and device Info
     useEffect(()=>{
+
       async function init(){
 
         const {info,isError} = await getLocationInfoByIP()
@@ -67,13 +69,13 @@ const VerifyOTPScreen = () => {
          if(isSuccess){
             if(isNewUser){
               setTimeout(()=>{
-                 dispatch(resetAuthState())
+                dispatch(resetAuthState())
                 navigation.navigate(screenNames.AddUserInfoScreen)
               },4000)
              }else{
            setTimeout(async()=>{
               dispatch(resetAuthState())
-             navigation.replace(screenNames.AuthSuccessScreen)
+              navigation.replace(screenNames.AuthSuccessScreen)
            },4000)
           }
         }
@@ -81,7 +83,6 @@ const VerifyOTPScreen = () => {
         if(isError && message){
            ToastAndroid.show(message,4000)
            setTimeout(()=>{
-             
              dispatch(resetAuthState())
            },4000)
         }
@@ -100,11 +101,13 @@ const VerifyOTPScreen = () => {
          return
       }
 
+      console.log(callingCode,"calling code")
+
       //dispatch
       dispatch(_verifyOTP({
          pin_id,
          mobileNumber,
-         callingCode,
+         callingCode:"256",
          pin:otp,
          lat:lat,
          long:long,

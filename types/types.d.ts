@@ -93,20 +93,12 @@ export interface Country {
 
 export interface User {
   id: string;
-  legalFirstName?: string;
-  legalLastName?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
-  phoneNumber: string;
+  mobileNumber: string;
   countryId: string;
-  country: Country;
-  artistAccount?: ArtistAccount;
-  artistAccountId?: string;
-  isVerified: boolean;
-  isSuspended: boolean;
-  location?: UserLocation;
-  devices: Device[];
-  bookingRequests: BookingRequest[];
-  sentChats: Chat[];
+  avatarUrl ?: string;
   createdAt: Date;
   updatedAt: Date;
 }

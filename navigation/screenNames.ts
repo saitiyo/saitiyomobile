@@ -2,6 +2,21 @@
 
 
 export const screenNames = {
+
+    //auth navigation
+    OnBoarding:"OnBoarding",
+    GetOTPScreen:"GetOTPScreen",
+    VerifyOTP:"VerifyOTPScreen",
+    AddUserInfoScreen:"AddUserInfoScreen",
+    AuthSuccessScreen:"AuthSuccessScreen",
+
+    //sites navigation
+    MySitesScreen:"MySitesScreen",
+    SiteDetailScreen:"SiteDetailScreen",
+    AddSiteScreen:"AddSiteScreen",
+    LinkDeviceScreen:"LinkDeviceScreen",
+
+
     //user main navigation
     HomeTab:"HomeTab",
     BookingsTab:"BookingsTab",
@@ -30,14 +45,7 @@ export const screenNames = {
     ArtistBookingsScreen:"ArtistBookingsScreen",
     ArtistProfileScreen:"ArtistProfileScreen",
     ArtistInboxScreen:"ArtistInboxScreen",
-
-
-    //auth navigation
-    OnBoarding:"OnBoarding",
-    GetOTPScreen:"GetOTPScreen",
-    VerifyOTP:"VerifyOTPScreen",
-    AddUserInfoScreen:"AddUserInfoScreen",
-    AuthSuccessScreen:"AuthSuccessScreen",
+ 
 
     //register artist
     RegisterAsArtistScreen:"RegisterAsArtistScreen",

@@ -78,40 +78,18 @@ const authSlice = createSlice({
             state.isSuccess = false
             state.loading = false
         },
-        switchToArtistAccount:(state)=>{
-           state.activeAccount = accounts.ARTIST
-        },
         showAuthStack:(state,action)=>{
            state.showAuthStack = action.payload
         },
         showAuthModal:(state,action)=>{
            state.authModalStatus = action.payload
         },
-        showRegisterArtistStack:(state,action)=>{
-           state.showRegisterArtistStack = action.payload
-        },
-        switchToUserAccount:(state)=>{
-          //clear all business global state
-          state.activeAccount = accounts.USER
-       },
        setIsInitializing:(state,action)=>{
            state.isInitializing = action.payload
        },
        setToken:(state,action)=>{
         state.token = action.payload
        },
-       setArtistAccountId:(state,action)=>{
-        state.artistAccountId = action.payload
-       },
-       setPhoto:(state,action)=>{
-        state.photo = action.payload
-       },
-       setUploadSide:(state,action)=>{
-        state.uploadSide = action.payload
-       },
-       setUserMainNavigationInitialRoute:(state,action)=>{
-        state.userMainNavigationInitialRoute = action.payload
-       }
     },
     extraReducers: builder => {
 
@@ -244,17 +222,10 @@ export const {
     setMobileNumber,
     setCallingCode,
     resetAuthState,
-    switchToArtistAccount,
-    switchToUserAccount,
     setIsInitializing,
     setToken,
     showAuthStack,
     showAuthModal,
-    showRegisterArtistStack,
-    setArtistAccountId,
-    setPhoto,
-    setUploadSide,
-    setUserMainNavigationInitialRoute,
     setOnBoardingStatus
 } = authSlice.actions
 export default authSlice.reducer

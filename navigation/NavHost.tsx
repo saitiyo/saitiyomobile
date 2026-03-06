@@ -12,6 +12,9 @@ import RegisterArtistStack from "./RegisterArtistStack"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import OnboardingScreen from "../screens/onBoardingScreen/onBoardingScreen"
 import { setOnBoardingStatus } from "../redux/feature/auth.feature"
+import AuthSuccessScreen from "../screens/authSuccessScreen/authSuccessScreen"
+import AddUserInfoScreen from "../screens/addUserInfo/addUserInfoScreen"
+import SitesStack from "./SitesStack"
 
 
 
@@ -35,7 +38,7 @@ const NavHost=()=>{
 
     const dispatch = useAppDispatch()
 
-    const {activeAccount,showAuthStack,showRegisterArtistStack,isFirstLaunch} = useSelector((state:RootState)=> state.authSlice)
+    const {activeAccount,showAuthStack,showRegisterArtistStack,isFirstLaunch,isAuthenticated} = useSelector((state:RootState)=> state.authSlice)
     const [newVersion,setNewVersion] = useState<number>(0)
     const [uri,setUri] = useState<string>("")
 
@@ -82,15 +85,11 @@ const NavHost=()=>{
         return <OnboardingScreen/>    
      }
 
-     //create a register artist stack
-     if(showRegisterArtistStack){
-        return <RegisterArtistStack/>
+
+     if(isAuthenticated && !showAuthStack){
+        return <SitesStack/>
      }
 
-    if(activeAccount === accounts.ARTIST){
-        return <ArtistMainNavigation/>
-    }
-    
 
 
     if (newVersion > APP_VERSION) {
@@ -102,6 +101,10 @@ const NavHost=()=>{
     return (
         // <UserMainNavigation/> 
         <AuthStack/>
+        // <SitesStack/>
+
+        // <AuthSuccessScreen/>
+        // <AddUserInfoScreen/>
     )
 }
 

@@ -78,7 +78,6 @@ export const _verifyOTP = createAsyncThunk<
         }
     });
 
-    console.log(data,'-------> verify otp data')
     return data;
   } catch (error:any) {
     let errorMessage = "Something has gone wrong";
@@ -112,7 +111,6 @@ export const _authenticateUserByToken = createAsyncThunk<
         }
     });
 
-    console.log(data,'-------> auth by token data')
     return data;
 
 

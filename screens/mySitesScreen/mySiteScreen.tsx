@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { gql} from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
@@ -7,49 +7,60 @@ import DashboardHeader from '../../components/DashboardHeader/DashboardHeader';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import CustomButton from '../../components/CustomBotton/CustomButton';
 import colors from '../../constants/Colors';
+import { Site } from '../../types/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 
 const GET_MY_SITES = gql`
-  query GetMySites {
-    getMySites {
-      id
-      name
-      logoUrl
-      status
-      daysLeft
-      progress
-      notificationCount
-    }
+ query GetMySites($userId: ID!) {
+  getMySites(userId: $userId) {
+    id
+    name
+    logoUrl
+    status
+    daysLeft
+    progress
+    notificationCount
   }
+}
 `;
 
-type Project = {
-  id: string;
-  name: string;
-  logoUrl?: string;
-  status?: string;
-  daysLeft?: number;
-  progress?: number;
-  notificationCount?: number;
-};
 
-type GetProjectsData = {
-  projects: Project[];
+
+type GetSiteData = {
+  getMySites: Site[];
 };
 
 const MySitesScreen = () => {
 
-  const { data, loading, error } = useQuery<GetProjectsData>(GET_MY_SITES);
+  const {user} = useSelector((state:RootState)=>state.authSlice)
+
+  const { data, loading, error } = useQuery<GetSiteData>(GET_MY_SITES,{
+    variables:{
+      userId:user?.id
+    }
+  });
+
+    const [sites,setSites] = useState<Site[]>([])
+
+  
+  useEffect(()=>{
+    if(data && data.getMySites){
+      setSites(data.getMySites)
+    }
+  },[data])
+
 
   if (loading) return <ActivityIndicator style={{flex: 1}} size="large" />;
+  
 
-  const projects = data?.projects || [];
 
   return (
     <View style={styles.container}>
       <DashboardHeader />
       
-      {projects.length === 0 ? (
+      {sites.length === 0 ? (
         // --- EMPTY STATE VIEW ---
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyTitle}>No Sites</Text>
@@ -69,7 +80,7 @@ const MySitesScreen = () => {
           </View>
           
           <FlatList
-            data={projects}
+            data={sites}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <ProjectCard project={item} />}
             contentContainerStyle={{ paddingBottom: 40 }}

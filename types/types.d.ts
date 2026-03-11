@@ -201,3 +201,18 @@ export interface Chat {
   conversation: Conversation;
   sender: User;
 }
+
+
+//========================================
+ // SAITIYO TYPES
+//=======================================
+
+interface Site {
+  id:string
+  name:string
+  logoUrl:string
+  status:string
+  daysLeft:string
+  progress:string
+  notificationCount:int
+}

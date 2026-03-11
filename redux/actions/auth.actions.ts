@@ -104,7 +104,7 @@ export const _authenticateUserByToken = createAsyncThunk<
 >('authenticate/by/token', async function ({token},thunkAPI): Promise<any> {
   try {
    
-    let {data} = await axios.get(`${API_URL}/auth/get/user`,{
+    let {data} = await axios.post(`${API_URL}/auth/authenticate`,{},{
         headers:{
             "Content-Type":"application/json",
             Authorization:`Bearer ${token}`
@@ -115,6 +115,8 @@ export const _authenticateUserByToken = createAsyncThunk<
 
 
   } catch (error:any) {
+
+    console.log(JSON.stringify(error))
     if (error.response){
       return thunkAPI.rejectWithValue({message:error.response.data.message})
   }

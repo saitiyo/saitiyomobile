@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { screenNames } from '../../navigation/screenNames';
 
 const DashboardHeader = () => {
+
   const navigation = useNavigation()
   const { user } = useSelector((state:RootState) => state.authSlice);
 
@@ -23,7 +24,7 @@ const DashboardHeader = () => {
           style={styles.avatar} 
         />
         <View style={styles.info}>
-          <Text style={styles.name}>{user?.firstName || "Moses O"}</Text>
+          <Text style={styles.name}>{user?.firstName}</Text>
           <Text style={styles.role}>{"Architect"}</Text>
         </View>
       </View>

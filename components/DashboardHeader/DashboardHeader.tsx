@@ -51,7 +51,9 @@ const DashboardHeader = () => {
               }}
             >
               <IonIcons name="person-outline" size={18} color={colors.black} />
-              <Text style={styles.menuText}>View Profile</Text>
+              <Text style={styles.menuText}>
+                View Profile
+              </Text>
             </TouchableOpacity>
 
     n        <View style={styles.separator} />
@@ -64,7 +66,9 @@ const DashboardHeader = () => {
               }}
             >
               <IonIcons name="hardware-chip-outline" size={18} color={colors.black} />
-              <Text style={styles.menuText}>Link device</Text>
+              <Text style={styles.menuText}>
+                Link device
+              </Text>
             </TouchableOpacity>
           </View>
         </>

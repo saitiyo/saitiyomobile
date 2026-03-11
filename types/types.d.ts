@@ -92,6 +92,7 @@ export interface Country {
 }
 
 export interface User {
+  _id:string
   id: string;
   firstName?: string;
   lastName?: string;
@@ -208,6 +209,7 @@ export interface Chat {
 //=======================================
 
 interface Site {
+  _id:string
   id:string
   name:string
   logoUrl:string

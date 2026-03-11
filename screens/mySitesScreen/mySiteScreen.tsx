@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, ToastAndroid } from 'react-native';
 import { gql} from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 
@@ -15,7 +15,7 @@ import { RootState } from '../../redux/store';
 const GET_MY_SITES = gql`
  query GetMySites($userId: ID!) {
   getMySites(userId: $userId) {
-    id
+    _id
     name
     logoUrl
     status
@@ -36,20 +36,28 @@ const MySitesScreen = () => {
 
   const {user} = useSelector((state:RootState)=>state.authSlice)
 
+  console.log(user,'_--------user')
+
   const { data, loading, error } = useQuery<GetSiteData>(GET_MY_SITES,{
     variables:{
-      userId:user?.id
+      userId:user?._id
     }
   });
 
-    const [sites,setSites] = useState<Site[]>([])
+  const [sites,setSites] = useState<Site[]>([])
 
   
   useEffect(()=>{
     if(data && data.getMySites){
+      console.log(data.getMySites,"---------my sites")
       setSites(data.getMySites)
     }
-  },[data])
+
+    if(error){
+      console.log(error,"--------errrrr")
+      ToastAndroid.show("Something has gone wrong",4000)
+    }
+  },[data,error])
 
 
   if (loading) return <ActivityIndicator style={{flex: 1}} size="large" />;

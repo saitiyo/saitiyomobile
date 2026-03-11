@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import colors from '../../constants/Colors';
 
 const ProjectCard = ({ project }: { project: any }) => {
+
   const progressPercent = (project.progress || 0) * 100;
 
   return (
@@ -29,7 +30,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             <View 
               style={[
                 styles.progressFill, 
-                { width: `${progressPercent}%`, backgroundColor: project.status === 'CLOSED' ? '#FF5252' : '#00C853' }
+                { width: `${50}%`, backgroundColor: project.status === 'CLOSED' ? '#FF5252' : '#00C853' }
               ]} 
             />
           </View>
@@ -42,16 +43,12 @@ const ProjectCard = ({ project }: { project: any }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.white,
-    borderRadius: 20,
+    borderRadius:8,
     padding: 20,
     marginBottom: 20,
     marginHorizontal: 20,
-    // Shadow for iOS/Android
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    borderWidth:1,
+    borderColor:"#F0F0F0",
     position: 'relative',
   },
   badge: {

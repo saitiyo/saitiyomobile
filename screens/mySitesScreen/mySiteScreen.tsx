@@ -9,9 +9,9 @@ import CustomButton from '../../components/CustomBotton/CustomButton';
 import colors from '../../constants/Colors';
 
 
-const GET_PROJECTS = gql`
-  query GetProjects {
-    projects {
+const GET_MY_SITES = gql`
+  query GetMySites {
+    getMySites {
       id
       name
       logoUrl
@@ -39,7 +39,7 @@ type GetProjectsData = {
 
 const MySitesScreen = () => {
 
-  const { data, loading, error } = useQuery<GetProjectsData>(GET_PROJECTS);
+  const { data, loading, error } = useQuery<GetProjectsData>(GET_MY_SITES);
 
   if (loading) return <ActivityIndicator style={{flex: 1}} size="large" />;
 

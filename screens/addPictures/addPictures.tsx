@@ -8,7 +8,6 @@ import { dimentions } from "../../constants/dimentions"
 import colors from "../../constants/Colors"
 
 import { useNavigation } from "@react-navigation/native"
-import CustomImageUploader from "../../components/CustomImageUploader/CustomImageUploader"
 import { gql } from "@apollo/client"
 import { useMutation } from "@apollo/client/react"
 import { useSelector } from "react-redux"
@@ -82,12 +81,7 @@ const AddPictures=()=>{
 
             <Spacer height={20}/>
 
-            <CustomImageUploader 
-                        onUpload={(url)=> setPhotos((prev)=>[...prev,url])}
-                        // maxImages={5}
-                        imagePath={""}
-                        error={""}
-                      />
+            {/* add back customImageUploadComponent */}
 
             <Spacer height={20}/>
 

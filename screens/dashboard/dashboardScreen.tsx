@@ -19,7 +19,6 @@ import { useNavigation } from '@react-navigation/native';
 const DashboardScreen = () => {
   const navigation = useNavigation();
   const { user } = useSelector((state: RootState) => state.authSlice);
-  const artist = user?.artistAccount;
 
   return (
     <ScrollView
@@ -41,7 +40,7 @@ const DashboardScreen = () => {
           <HeadingText text="Hi" textStyles={{ color: colors.white }} />
 
           <HeadingText
-            text={artist ? artist.stageName : ''}
+            text={user && user.firstName ? user.firstName : ''}
             textStyles={{ color: '#767676', fontSize: 24 }}
           />
 
@@ -72,21 +71,21 @@ const DashboardScreen = () => {
             onPress={() => (navigation as any).navigate('UpdateProfileHome')}
           >
             <Icon name="create-outline" size={28} color={colors.primary} />
-            <Text style={styles.quickActionText}>Edit Profile</Text>
+            <Text style={styles.quickActionText}>Work on Task</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
             onPress={() => (navigation as any).navigate('AddPictures')}
           >
             <Icon name="images-outline" size={28} color={colors.primary} />
-            <Text style={styles.quickActionText}>Add Photos</Text>
+            <Text style={styles.quickActionText}>Go to Team</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
             onPress={() => (navigation as any).navigate('AddMinimumBookingFee')}
           >
             <Icon name="cash-outline" size={28} color={colors.primary} />
-            <Text style={styles.quickActionText}>Set Fee</Text>
+            <Text style={styles.quickActionText}>Upload Document</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -102,21 +101,21 @@ const DashboardScreen = () => {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
-              {artist?.minimumBookingFee ?? '--'}
+              100
             </Text>
-            <Text style={styles.statLabel}>Min. Fee</Text>
+            <Text style={styles.statLabel}>Inventory</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
-              {artist?.profileImages?.length ?? 0}
+              50
             </Text>
-            <Text style={styles.statLabel}>Photos</Text>
+            <Text style={styles.statLabel}>Team</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
-              {artist?.isVerified ? 'Yes' : 'No'}
+              5
             </Text>
-            <Text style={styles.statLabel}>Verified</Text>
+            <Text style={styles.statLabel}>Tasks</Text>
           </View>
         </View>
       </View>
@@ -125,12 +124,12 @@ const DashboardScreen = () => {
 
       <View style={styles.section}>
         <HeadingText
-          text="Recent Bookings"
+          text="Recent Tasks"
           textStyles={{ fontSize: 18, color: colors.black }}
         />
         <Spacer height={10} />
         <BodyText
-          text="You have no recent bookings yet."
+          text="You have no recent tasks."
           textStyles={{ color: colors.gray400 }}
         />
         {/* You can add a FlatList here for real booking data */}

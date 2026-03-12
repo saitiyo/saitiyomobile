@@ -3,8 +3,8 @@ import { _addNickname, _addUserInfo, _authenticateUserByToken, _getOTP, _updateU
 import { asyncStoreData } from "../../utils/asyncStorageHelpers";
 import { storageKeys } from "../../constants/storageKeys";
 import { accounts } from "../../constants/accounts";
-import { User } from "../../types/types";
 import { PhotoFile } from "react-native-vision-camera";
+import { Site, User } from "../../types/types";
 
 
 
@@ -26,7 +26,6 @@ interface IntialState {
     showAuthStack:boolean
     showRegisterArtistStack?:boolean
     isNewUser:boolean
-    artistAccountId?:string|null
     photo?:PhotoFile| undefined
     uploadSide?:string
     userMainNavigationInitialRoute?:string
@@ -51,7 +50,6 @@ const initialState:IntialState =  {
    showAuthStack:false,
    showRegisterArtistStack:false,
    isNewUser:false,
-   artistAccountId:null,
    photo:undefined,
    uploadSide:"front",
    userMainNavigationInitialRoute:undefined,

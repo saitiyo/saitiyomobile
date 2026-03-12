@@ -218,3 +218,16 @@ interface Site {
   progress:string
   notificationCount:int
 }
+
+interface User {
+  _id:string
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  mobileNumber: string;
+  countryId: string;
+  avatarUrl ?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

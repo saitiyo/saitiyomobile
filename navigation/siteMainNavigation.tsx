@@ -6,7 +6,9 @@ import Icon from "@react-native-vector-icons/ionicons"
 import DashboardStack from './DashboardStack';
 
 
-const ArtistMainNavigation=()=>{
+const SiteMainNavigation=()=>{
+
+
     const Tab = createBottomTabNavigator();
 
     return(
@@ -28,42 +30,54 @@ const ArtistMainNavigation=()=>{
       }}
       />
       <Tab.Screen 
-      name={screenNames.ArtistBookingsTab} 
+      name={screenNames.TasksTab} 
       component={DashboardStack}
       options={{
           tabBarActiveTintColor:colors.primary,
           tabBarIcon:({focused})=>(
-              <Icon name="calendar-clear-sharp" size={18} color={focused ?colors.primary : colors.gray400} />
+              <Icon name="checkbox" size={18} color={focused ?colors.primary : colors.gray400} />
           ),
-          title:"Bookings"
+          title:"Tasks"
       }}
        />
 
          <Tab.Screen 
-            name={screenNames.ArtistInboxScreen} 
+            name={screenNames.InventoryTab} 
             component={DashboardStack}
             options={{
                 tabBarActiveTintColor:colors.primary,
                 tabBarIcon:({focused})=>(
-                    <Icon name="chatbox" size={18} color={focused ?colors.primary : colors.gray400} />
+                    <Icon name="basket" size={18} color={focused ?colors.primary : colors.gray400} />
                 ),
-                title:"Inbox"
+                title:"Inventory"
             }}
        />
 
        <Tab.Screen 
-            name={screenNames.ArtistProfileScreen} 
+            name={screenNames.TeamTab} 
             component={DashboardStack}
             options={{
                 tabBarActiveTintColor:colors.primary,
                 tabBarIcon:({focused})=>(
-                    <Icon name="person" size={18} color={focused ?colors.primary : colors.gray400} />
+                    <Icon name="people" size={18} color={focused ?colors.primary : colors.gray400} />
                 ),
-                title:"Profile"
+                title:"Team"
+            }}
+       />
+       <Tab.Screen 
+            name={screenNames.MoreTab} 
+            component={DashboardStack}
+            options={{
+                tabBarActiveTintColor:colors.primary,
+
+                tabBarIcon:({focused})=>(
+                    <Icon name="reorder-three-outline" size={18} color={focused ?colors.primary : colors.gray400} />
+                ),
+                title:"More"
             }}
        />
       </Tab.Navigator>
     )
 }
 
-export default ArtistMainNavigation
+export default SiteMainNavigation

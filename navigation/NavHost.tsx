@@ -1,20 +1,15 @@
 import { useSelector } from "react-redux"
-import UserMainNavigation from "./userMainNavigation"
 import { RootState, useAppDispatch } from "../redux/store"
-import { accounts } from "../constants/accounts"
 import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
 import UpdateAppScreen from "../screens/updateAppScreen/updateAppScreen"
 import { useEffect, useState } from "react"
-import ArtistMainNavigation from "./artistMainNavigation"
 import AuthStack from "./AuthStack"
-import RegisterArtistStack from "./RegisterArtistStack"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import OnboardingScreen from "../screens/onBoardingScreen/onBoardingScreen"
 import { setOnBoardingStatus } from "../redux/feature/auth.feature"
-import AuthSuccessScreen from "../screens/authSuccessScreen/authSuccessScreen"
-import AddUserInfoScreen from "../screens/addUserInfo/addUserInfoScreen"
 import SitesStack from "./SitesStack"
+import SiteMainNavigation from "./siteMainNavigation"
 
 
 
@@ -38,7 +33,9 @@ const NavHost=()=>{
 
     const dispatch = useAppDispatch()
 
-    const {activeAccount,showAuthStack,showRegisterArtistStack,isFirstLaunch,isAuthenticated} = useSelector((state:RootState)=> state.authSlice)
+    const {showAuthStack,isFirstLaunch,isAuthenticated} = useSelector((state:RootState)=> state.authSlice)
+    const {selectedSite} = useSelector((state:RootState)=> state.siteSlice)
+
     const [newVersion,setNewVersion] = useState<number>(0)
     const [uri,setUri] = useState<string>("")
 
@@ -61,15 +58,11 @@ const NavHost=()=>{
     }
   };
 
- 
-  
-
     /**
      * Get current in app version from async storage
      * [add one if not found]
      */
 
-   
 
     useEffect(()=>{
       if(data && data.getVersion){
@@ -86,10 +79,13 @@ const NavHost=()=>{
      }
 
 
-     if(isAuthenticated && !showAuthStack){
+     if(isAuthenticated && !showAuthStack && !selectedSite){
         return <SitesStack/>
      }
 
+     if(isAuthenticated && !showAuthStack && selectedSite){
+        return <SiteMainNavigation/>
+     }
 
 
     if (newVersion > APP_VERSION) {

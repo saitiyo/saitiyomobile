@@ -17,12 +17,12 @@ export const screenNames = {
     LinkDeviceScreen:"LinkDeviceScreen",
 
 
-    //user main navigation
-    HomeTab:"HomeTab",
-    BookingsTab:"BookingsTab",
-    FavouritesTab:"FavouritesTab",
-    ProfileTab:"ProfileTab",
-    InboxTab:"InboxTab",
+    //site main navigation
+    DashboardTab:"DashboardTab",
+    TasksTab:"TasksTab",
+    InventoryTab:"InventoryTab",
+    TeamTab:"TeamTab",
+    MoreTab:"MoreTab",
 
     //
     HomeScreen:"HomeScreen",
@@ -36,7 +36,7 @@ export const screenNames = {
 
 
     //artist main navigation
-    DashboardTab:"DashboardTab",
+  
     ArtistBookingsTab:"ArtistBookingsTab",
     ArtistProfileTab:"ArtistProfileTab",
     ArtistInboxTab:"ArtistInboxTab",

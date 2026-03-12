@@ -1,12 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../constants/Colors';
+import { useAppDispatch } from '../../redux/store';
+import { setSelectedSite } from '../../redux/feature/site.feature';
+import { Site } from '../../types/types';
 
-const ProjectCard = ({ project }: { project: any }) => {
+const ProjectCard = ({ project }: { project:Site }) => {
 
-  const progressPercent = (project.progress || 0) * 100;
+  // const progressPercent = (project.progress || 0) * 100;
+
+  const dispatch = useAppDispatch()
 
   return (
+    <TouchableOpacity onPress={()=> dispatch(setSelectedSite(project)) }>
     <View style={styles.card}>
       {project.notificationCount > 0 && (
         <View style={styles.badge}>
@@ -37,6 +43,7 @@ const ProjectCard = ({ project }: { project: any }) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 };
 

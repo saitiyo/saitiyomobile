@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, ToastAndroid } from 'react-native';
 import { gql} from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
@@ -10,6 +10,8 @@ import colors from '../../constants/Colors';
 import { Site } from '../../types/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
 
 
 const GET_MY_SITES = gql`
@@ -35,10 +37,11 @@ type GetSiteData = {
 const MySitesScreen = () => {
 
   const {user} = useSelector((state:RootState)=>state.authSlice)
+  const navigation = useNavigation()
 
   console.log(user,'_--------user')
 
-  const { data, loading, error } = useQuery<GetSiteData>(GET_MY_SITES,{
+  const { data, loading, error,refetch } = useQuery<GetSiteData>(GET_MY_SITES,{
     variables:{
       userId:user?._id
     }
@@ -46,7 +49,13 @@ const MySitesScreen = () => {
 
   const [sites,setSites] = useState<Site[]>([])
 
-  
+  useFocusEffect(
+    useCallback(() => {
+      // Refetch sites when screen is focused
+      refetch();
+    }, [refetch])
+  );
+
   useEffect(()=>{
     if(data && data.getMySites){
       console.log(data.getMySites,"---------my sites")
@@ -74,7 +83,9 @@ const MySitesScreen = () => {
           <Text style={styles.emptyTitle}>No Sites</Text>
           <Text style={styles.emptySub}>You have no sites at the moment</Text>
           <View style={{ width: '100%', marginTop: 20 }}>
-            <CustomButton title="Add New" onPress={() => {}} />
+            <CustomButton title="Add New" onPress={() => {
+                   navigation.navigate('AddSiteScreen' as never)
+            }} />
           </View>
         </View>
       ) : (
@@ -82,7 +93,9 @@ const MySitesScreen = () => {
         <View style={{ flex: 1 }}>
           <View style={styles.listHeader}>
             <Text style={styles.title}>All Site</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                   navigation.navigate('AddSiteScreen' as never)
+            }}>
               <Text style={styles.addNewText}>Add New</Text>
             </TouchableOpacity>
           </View>

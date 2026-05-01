@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, Alert, Modal, SafeAreaView } from "react-native";
 import IonIcons from "@react-native-vector-icons/ionicons";
 import { Camera, useCameraDevices, useCodeScanner } from "react-native-vision-camera";
 import colors from "../../constants/Colors";
 import CustomButton from "../../components/CustomBotton/CustomButton";
 import HeadingText from "../../components/HeadingText";
+import { useCameraPermission } from "react-native-vision-camera";
+import SafeAreaContainer from "../../components/SafeAreaContainer/SafeAreaContainer";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface Device {
   id: string;
@@ -14,26 +20,80 @@ interface Device {
   isCurrent: boolean;
 }
 
+
+const SCAN_QR_CODE = gql`
+  mutation ScanQRCode($sessionId: String!, $userId: String!) {
+  scanQRCode(session_id: $sessionId, userId: $userId) {
+    session_id
+    token
+  }
+}
+`
+
 const LinkDeviceScreen = () => {
+
   const [devices, setDevices] = useState<Device[]>([
     { id: "1", name: "Moses' iPhone 15", model: "iOS Device", lastUsed: "Active now", isCurrent: true },
   ]);
+
+  const [scanQRCode,{ loading: isScanning,data,error }] = useMutation(SCAN_QR_CODE);
+  const { user } = useSelector((state:RootState) => state.authSlice);
+
   const [isScannerVisible, setIsScannerVisible] = useState(false);
 
   // --- CAMERA LOGIC ---
   const devicesList = useCameraDevices();
   const device = devicesList.find((d) => d.position === "back");
 
+  const { hasPermission, requestPermission } = useCameraPermission();
+
+  useEffect(() => {
+    if (data) {
+      console.log("QR Code Scan Successful:", data);
+    }
+    if (error) {
+      console.log("Error scanning QR code:", error);
+    }
+  }, [data, error]);
+
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],
     onCodeScanned: (codes) => {
+      console.log("Codes scanned:===========tttt", codes);
       if (codes.length > 0 && isScannerVisible) {
         setIsScannerVisible(false);
+        console.log("QR Code Scanned:", codes[0].value);
+        console.log(user,'_-------user')
+
+        //login in user on the browser with the scanned QR code data (simulate linking)
+         scanQRCode({
+          variables:{
+            sessionId: codes[0].value,
+            userId: user?._id
+          }
+         })
         // Simulate linking the new device found in the QR
         handleLinkSuccess("New Office Tablet");
       }
     }
   });
+
+  const handleLinkDevicePress = async () => {
+    if (hasPermission) {
+      setIsScannerVisible(true);
+    } else {
+      const granted = await requestPermission();
+      if (granted) {
+        setIsScannerVisible(true);
+      } else {
+        Alert.alert(
+          'Camera Permission Required',
+          'Please allow camera access to scan QR codes.',
+          [{ text: 'OK' }]
+        );
+      }
+    }
+  };
 
   const handleLinkSuccess = (deviceName: string) => {
     const newDevice: Device = {
@@ -46,6 +106,44 @@ const LinkDeviceScreen = () => {
     setDevices((prev) => [...prev, newDevice]);
     Alert.alert("Success", `${deviceName} has been linked to your account.`);
   };
+
+  if (!hasPermission) {
+    return (
+      <SafeAreaContainer>
+        <View style={{
+          flex: 1,
+    paddingHorizontal: 15,
+    alignItems: "center",
+    justifyContent: "center",
+        }}>
+          <Text style={{
+            fontSize: 16,
+    color: colors.black,
+    textAlign: "center",
+    marginBottom: 20,
+          }}>We need your permission to access your camera</Text>
+          <CustomButton onPress={async() =>{
+            try {
+
+              const granted = await requestPermission();
+            if (granted) {
+              setIsScannerVisible(true);
+            } else {
+              Alert.alert(
+                'Camera Permission Required',
+                'Please allow camera access to scan QR codes.',
+                [{ text: 'OK' }]
+              );
+            }
+              
+            } catch (error) {
+              console.log("Error requesting camera permission:", error);
+            }
+          }} title="grant permission" />
+        </View>
+      </SafeAreaContainer>
+    );
+  }
 
   const renderDeviceItem = ({ item }: { item: Device }) => (
     <View style={styles.deviceCard}>
@@ -81,7 +179,7 @@ const LinkDeviceScreen = () => {
       />
 
       <View style={styles.footer}>
-        <CustomButton title="Link a device" onPress={() => setIsScannerVisible(true)} />
+        <CustomButton title="Link a device" onPress={handleLinkDevicePress} />
       </View>
 
       {/* --- SCANNER MODAL --- */}

@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import IonIcons from "@react-native-vector-icons/ionicons";
-import HeadingText from "../../components/HeadingText";
-import CustomButton from "../../components/CustomBotton/CustomButton";
-import colors from "../../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
-import { screenNames } from "../../navigation/screenNames";
+import HeadingText from "../../components/HeadingText/HeadingText";
+import CustomButton from "../../components/CustomButton/CustomButton";
+import colors from "../../constants/colors";
 import { useAppDispatch } from "../../redux/store";
 import { getAuthToken } from "../../constants/authorization";
 import { _authenticateUserByToken } from "../../redux/actions/auth.actions";
-import { showAuthStack } from "../../redux/feature/auth.feature";
+import { showAuthStack } from "../../redux/features/auth.features";
 
 const AuthSuccessScreen = () => {
   

@@ -1,7 +1,7 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import { AppDispatch } from "../store";
 import axios from "axios";
-import { API_URL } from "../../constants/api";
+import { API_URL } from "../../network/api";
 import { asyncGetData } from "../../utils/asyncStorageHelpers";
 import { storageKeys } from "../../constants/storageKeys";
 
@@ -117,6 +117,7 @@ export const _authenticateUserByToken = createAsyncThunk<
   } catch (error:any) {
 
     console.log(JSON.stringify(error))
+    
     if (error.response){
       return thunkAPI.rejectWithValue({message:error.response.data.message})
   }

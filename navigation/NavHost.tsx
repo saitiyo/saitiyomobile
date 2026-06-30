@@ -4,12 +4,12 @@ import { gql } from "@apollo/client"
 import { useQuery } from "@apollo/client/react"
 import UpdateAppScreen from "../screens/updateAppScreen/updateAppScreen"
 import { useEffect, useState } from "react"
-import AuthStack from "./AuthStack"
+import AuthStack from "./authStack"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import OnboardingScreen from "../screens/onBoardingScreen/onBoardingScreen"
-import { setOnBoardingStatus } from "../redux/feature/auth.feature"
-import SitesStack from "./SitesStack"
-import SiteMainNavigation from "./siteMainNavigation"
+import OnBoarding from "../screens/onBoarding/onBoarding"
+import { setOnBoardingStatus } from "../redux/features/auth.features"
+// import SitesStack from "./SitesStack"
+// import SiteMainNavigation from "./siteMainNavigation"
 
 
 
@@ -34,7 +34,7 @@ const NavHost=()=>{
     const dispatch = useAppDispatch()
 
     const {showAuthStack,isFirstLaunch,isAuthenticated} = useSelector((state:RootState)=> state.authSlice)
-    const {selectedSite} = useSelector((state:RootState)=> state.siteSlice)
+    // const {selectedSite} = useSelector((state:RootState)=> state.siteSlice)
 
     const [newVersion,setNewVersion] = useState<number>(0)
     const [uri,setUri] = useState<string>("")
@@ -46,11 +46,11 @@ const NavHost=()=>{
 
 
 
-  const checkFirstLaunch = async () => {
+   const checkFirstLaunch = async () => {
     try {
       const hasViewedOnboarding = await AsyncStorage.getItem('@viewedOnboarding');
 
-      dispatch(setOnBoardingStatus(hasViewedOnboarding === 'true'));
+      dispatch(setOnBoardingStatus(hasViewedOnboarding !== 'true'));
 
     } catch (error) {
       console.error('Error checking onboarding status:', error);
@@ -58,11 +58,7 @@ const NavHost=()=>{
     }
   };
 
-    /**
-     * Get current in app version from async storage
-     * [add one if not found]
-     */
-
+   
 
     useEffect(()=>{
       if(data && data.getVersion){
@@ -72,35 +68,29 @@ const NavHost=()=>{
     },[data])
 
   
-    
-
-     if(isFirstLaunch){
-        return <OnboardingScreen/>    
-     }
-
-
-     if(isAuthenticated && !showAuthStack && !selectedSite){
-        return <SitesStack/>
-     }
-
-     if(isAuthenticated && !showAuthStack && selectedSite){
-        return <SiteMainNavigation/>
-     }
 
 
     if (newVersion > APP_VERSION) {
          return <UpdateAppScreen uri={uri}/>
     }
+    
 
-   
+     if(isFirstLaunch){
+        return <OnBoarding/>    
+     }
+
+
+    //  if(isAuthenticated && !showAuthStack && !selectedSite){
+    //     return <SitesStack/>
+    //  }
+
+    //  if(isAuthenticated && !showAuthStack && selectedSite){
+    //     return <SiteMainNavigation/>
+    //  }
+
 
     return (
-        // <UserMainNavigation/> 
         <AuthStack/>
-        // <SitesStack/>
-
-        // <AuthSuccessScreen/>
-        // <AddUserInfoScreen/>
     )
 }
 

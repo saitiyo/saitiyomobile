@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, StyleSheet, View } from "react-native"
+import { Image,StyleSheet, View } from "react-native"
 
 
 const Logo=()=>{

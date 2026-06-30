@@ -1,10 +1,8 @@
 import { TouchableOpacity, View } from "react-native"
-import HeadingText from "../HeadingText"
-import BodyText from "../BodyText"
+import HeadingText from "../HeadingText/HeadingText"
+import BodyText from "../BodyText/BodyText"
 import Ionicons from "@react-native-vector-icons/ionicons"
 import { useNavigation } from "@react-navigation/native"
-
-
 
 interface Props {
     title:string

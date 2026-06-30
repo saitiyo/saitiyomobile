@@ -1,8 +1,8 @@
 import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { dimentions } from '../../constants/dimentions'
-import colors from '../../constants/Colors'
-import CustomButton from '../../components/CustomBotton/CustomButton'
+import colors from '../../constants/colors'
+import CustomButton from '../../components/CustomButton/CustomButton'
 import Spacer from '../../components/Spacer/Spacer'
 import Logo from '../../components/Logo/Logo'
 

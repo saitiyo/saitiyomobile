@@ -31,7 +31,6 @@ const AuthSuccessScreen = () => {
             const token = await getAuthToken()
              dispatch(_authenticateUserByToken({token:token as string}))
              dispatch(showAuthStack(false))
-
         }}
         />
       </View>

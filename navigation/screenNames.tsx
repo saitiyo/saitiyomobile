@@ -19,9 +19,26 @@ export const screenNames = {
 
     //site main navigation
     DashboardTab:"DashboardTab",
+    DasboardScreen:"DasboardScreen",
+
+    //teams tabs
+     TeamTab:"TeamTab",
+     TeamHomeScreen:"TeamHomeScreen",
+     TeamMembersScreen:"TeamMemebersScreen",
+     AddSupportTeamMemberScreen:"AddSupportTeamMemberScreen",
+     InviteTeamMemberScreen:"InviteTeamMemberScreen",
+
+    
+    //
     TasksTab:"TasksTab",
+    TasksHomeScreen:"TasksHomeScreen",
+
+    //
     InventoryTab:"InventoryTab",
-    TeamTab:"TeamTab",
+    InventoryHomeScreen:"InventoryHomeScreen",
+
+    //
     MoreTab:"MoreTab",
+    MoreHomeScreen:"MoreHomeScreen",
 
 }

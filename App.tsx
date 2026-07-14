@@ -7,16 +7,22 @@ import { Provider} from 'react-redux';
 import store from './redux/store';
 import { NavigationContainer } from '@react-navigation/native';
 import Main from './Main';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 function App() {
   return (
+    
     <Provider store={store}>
      <NavigationContainer>
+      <GestureHandlerRootView>
     <SafeAreaProvider>
       <Main/>
     </SafeAreaProvider>
+     </GestureHandlerRootView>
     </NavigationContainer>
     </Provider>
+   
   );
 }
 

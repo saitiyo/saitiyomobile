@@ -8,8 +8,9 @@ import AuthStack from "./authStack"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import OnBoarding from "../screens/onBoarding/onBoarding"
 import { setOnBoardingStatus } from "../redux/features/auth.features"
-// import SitesStack from "./SitesStack"
-// import SiteMainNavigation from "./siteMainNavigation"
+import SitesStack from "./sitesStack"
+import SiteMainNavigation from "./SiteMainNavigation"
+
 
 
 
@@ -34,7 +35,7 @@ const NavHost=()=>{
     const dispatch = useAppDispatch()
 
     const {showAuthStack,isFirstLaunch,isAuthenticated} = useSelector((state:RootState)=> state.authSlice)
-    // const {selectedSite} = useSelector((state:RootState)=> state.siteSlice)
+    const {selectedSite} = useSelector((state:RootState)=> state.siteSlice)
 
     const [newVersion,setNewVersion] = useState<number>(0)
     const [uri,setUri] = useState<string>("")
@@ -80,13 +81,13 @@ const NavHost=()=>{
      }
 
 
-    //  if(isAuthenticated && !showAuthStack && !selectedSite){
-    //     return <SitesStack/>
-    //  }
+     if(isAuthenticated && !showAuthStack && !selectedSite){
+        return <SitesStack/>
+     }
 
-    //  if(isAuthenticated && !showAuthStack && selectedSite){
-    //     return <SiteMainNavigation/>
-    //  }
+     if(isAuthenticated && !showAuthStack && selectedSite){
+        return <SiteMainNavigation/>
+     }
 
 
     return (
